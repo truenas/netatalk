@@ -1,0 +1,26 @@
+Description: Fix output of macusers script for long usernames
+Author: Will Aoki <waoki@umnh.utah.edu>
+Reviewed-By: Jonas Smedegaard <dr@jones.dk>
+Forwarded: no
+Bug-Debian: https://bugs.debian.org/462186
+Last-Update: 2008-04-05
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/contrib/macusers/macusers.in
++++ b/contrib/macusers/macusers.in
+@@ -124,7 +124,14 @@
+                         close(PFILES);
+                 }
+ 
+-                ($t, $t, $uid, $t, $t, $t, $name, $t, $t) = getpwnam($user);
++                # Deal with truncated usernames. Caution: this does make the
++                # assumption that no username will be all-numeric.
++                if ($user =~ /^[0-9]+$/) {
++                        $uid = $user;
++                        ($user, $t, $t, $t, $t, $t, $name, $t, $t) = getpwuid($uid);
++                } else {
++                        ($t, $t, $uid, $t, $t, $t, $name, $t, $t) = getpwnam($user);
++                }
+                 ($name) = ( $name =~ /(^[^,]+)/ );
+                 printf "%-8d %-8d %-16s %-20s %-9s %s\n", $pid, $uid, $user,
+                     $name, $time, $mac{$pid};

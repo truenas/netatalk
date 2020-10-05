@@ -1,0 +1,79 @@
+Source: netatalk
+Section: net
+Priority: optional
+Maintainer: Andrew Walker <awalker@ixsystems.com>
+Build-Depends:
+ autotools-dev,
+ bison,
+ cdbs,
+ libdbus-glib-1-dev,
+ debhelper,
+ dh-autoreconf,
+ flex,
+ libmariadb-dev-compat,
+ libacl1-dev,
+ libavahi-client-dev,
+ libdb-dev,
+ libgcrypt20-dev,
+ libldap2-dev,
+ libkrb5-dev,
+ libltdl3-dev,
+ libpam0g-dev,
+ libwrap0-dev,
+ systemtap-sdt-dev,
+Build-Conflicts:
+ libavahi-compat-libdnssd-dev,
+Vcs-Git: https://salsa.debian.org/netatalk-team/netatalk.git
+Vcs-Browser: https://salsa.debian.org/netatalk-team/netatalk
+Standards-Version: 4.4.1
+Homepage: http://netatalk.sourceforge.net/
+Rules-Requires-Root: no
+
+Package: netatalk
+Architecture: any
+Depends:
+ ${cdbs:Depends},
+ ${misc:Depends},
+ ${perl:Depends},
+ ${shlibs:Depends},
+Recommends:
+ dbus,
+ python3,
+ python3-dbus,
+ ${cdbs:Recommends},
+Suggests:
+ ${cdbs:Suggests},
+Description: Apple Filing Protocol service
+ Netatalk is an implementation of the Apple Filing Protocol (AFP),
+ for offering file service (mainly) to macOS clients.
+ .
+ Compared to the Windows-native SMB protocol
+ (which is also supported on macOS),
+ the Macintosh-native AFP protocol is accessible from a different network,
+ can be simpler to setup and faster for some operations
+ (e.g. server-to-server copying),
+ and some features (e.g. the backup service Time Machine)
+ may work more reliably than over SMB.
+ .
+ This package contains all daemon and utility programs
+ as well as Netatalk's libraries.
+
+Package: netatalk-dbg
+Section: debug
+Architecture: any
+Depends:
+ netatalk (= ${binary:Version}),
+ ${misc:Depends},
+Description: Apple Filing Protocol service - debug symbols
+ Netatalk is an implementation of the Apple Filing Protocol (AFP),
+ for offering file service (mainly) to macOS clients.
+ .
+ Compared to the Windows-native SMB protocol
+ (which is also supported on macOS),
+ the Macintosh-native AFP protocol is accessible from a different network,
+ can be simpler to setup and faster for some operations
+ (e.g. server-to-server copying),
+ and some features (e.g. the backup service Time Machine)
+ may work more reliably than over SMB.
+ .
+ This package contains the debugging symbols for Netatalk.

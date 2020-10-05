@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -eu
+
+# skip non-copyright-protected Debian files
+RE_debian='debian/(changelog|copyright(-check|_hints)?|source/lintian-overrides)'
+
+# check for copyright and licensing statements
+licensecheck --copyright --deb-machine --recursive --lines 0 --check '.*' --ignore "^($RE_debian)$" -- * > debian/copyright_hints

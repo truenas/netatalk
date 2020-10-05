@@ -1,0 +1,38 @@
+Description: Fix use after free in get_tm_used()
+ If get_tm_used encounters a directory
+ with a name ending in "sparsebundle",
+ and the logged-in user does not have execute permission
+ on that directory,
+ we destroy the infoplist bstring we created,
+ and move on to the next entry.
+ Unfortunately, we do not set infoplist to NULL,
+ and trying to bdestroy infoplist at cleanup time
+ causes an attempted read of bstring->slen
+ in a region that was freed.
+ .
+ Found with Clang's address sanitizer.
+Author: Jose Quinteiro <github@quinteiro.org>
+Bug: https://github.com/Netatalk/Netatalk/pull/128
+Last-Update: 2020-09-25
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/etc/afpd/volume.c
++++ b/etc/afpd/volume.c
+@@ -183,6 +183,7 @@
+             
+             if ((bandsize = get_tm_bandsize(cfrombstr(infoplist))) == -1) {
+                 bdestroy(infoplist);
++                infoplist = NULL;
+                 continue;
+             }
+ 
+@@ -190,7 +191,9 @@
+ 
+             if ((links = get_tm_bands(cfrombstr(bandsdir))) == -1) {
+                 bdestroy(infoplist);
++                infoplist = NULL;
+                 bdestroy(bandsdir);
++                bandsdir = NULL;
+                 continue;
+             }
+ 

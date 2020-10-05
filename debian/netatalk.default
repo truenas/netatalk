@@ -1,0 +1,4 @@
+# This file is obsolete
+
+# If you don't want netatalk to be started as a system service,
+# disable it using the command 'update-rc.d netatalk disable'

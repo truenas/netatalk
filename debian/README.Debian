@@ -1,0 +1,33 @@
+Netatalk packaged for Debian
+============================
+
+This is the pre-packaged Debian version of the Netatalk protocol suite.
+
+
+Security features and license complications
+-------------------------------------------
+
+Netatalk in Debian includes the DHX2 user access module (UAM),
+enabling secure access from macOS 10.4 and newer.
+
+Netatalk in Debian does not include DHX or Randnum UAMs
+needed for secure access from earlier releases of macOS,
+or the GSS UAM needed to authenticate with Kerberos,
+because Netatalk license is incompatible with OpenSSL licensing.
+
+You can build locally with OpenSSL.
+See details in debian/README.source in the source package.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sat Feb 23 10:32:07 2019 +0100
+
+
+Group write access
+------------------
+
+When providing group write access by use of POSIX setuid,
+preserving that extended bit when clients create subdirectories
+may require setting the option "perm:0770".
+See details at https://bugs.debian.org/458174
+
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sun Feb 17 16:15:05 2019 +0100

@@ -1,0 +1,16 @@
+Description: Fix implicit declarations in become_root() and unbecome_root()
+Author: Ruben Kerkhof <ruben@rubenkerkhof.com>
+Bug: https://github.com/Netatalk/Netatalk/pull/102
+Last-Update: 2020-09-25
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/libatalk/adouble/ad_flush.c
++++ b/libatalk/adouble/ad_flush.c
+@@ -39,6 +39,7 @@
+ #include <atalk/bstradd.h>
+ #include <atalk/errchk.h>
+ #include <atalk/util.h>
++#include <atalk/unix.h>
+ 
+ #include "ad_lock.h"
+ 

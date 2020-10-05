@@ -1,0 +1,6 @@
+Test-Command: PATH=/usr/sbin:/sbin:/usr/bin:/bin prove debian/tests/*.t
+Depends:
+ libtest-command-simple-perl,
+ perl,
+ @,
+Restrictions: superficial

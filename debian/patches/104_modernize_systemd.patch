@@ -1,0 +1,19 @@
+Description: Modernize Systemd service file
+ Declaring After=syslog.target is unnecessary:
+ syslog is socket-activated and will therefore be started when needed.
+Author: Jonas Smedegaard <dr@jones.dk>
+Forwarded: no
+Last-Update: 2019-02-18
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/distrib/initscripts/service.systemd.tmpl
++++ b/distrib/initscripts/service.systemd.tmpl
+@@ -4,7 +4,7 @@
+ Description=Netatalk AFP fileserver for Macintosh clients
+ Documentation=man:afp.conf(5) man:netatalk(8) man:afpd(8) man:cnid_metad(8) man:cnid_dbd(8)
+ Documentation=http://netatalk.sourceforge.net/
+-After=syslog.target network.target avahi-daemon.service
++After=network.target avahi-daemon.service
+ 
+ [Service]
+ Type=forking

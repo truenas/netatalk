@@ -39,6 +39,7 @@
 #include <atalk/bstradd.h>
 #include <atalk/errchk.h>
 #include <atalk/util.h>
+#include <atalk/unix.h>
 
 #include "ad_lock.h"
 
@@ -330,14 +331,14 @@ static int ad_flush_hf(struct adouble *ad)
 EC_CLEANUP:
     if (cwd != -1) {
         if (fchdir(cwd) != 0) {
-            AFP_PANIC("ad_flush: cant fchdir");
+            AFP_PANIC("ad_flush: can't fchdir");
         }
         close(cwd);
     }
     EC_EXIT;
 }
 
-/* Flush resofork adouble file if any (currently adouble:ea and #ifndef HAVE_EAFD eg Linux) */
+/* Flush resofork adouble file if any (currently adouble:ea and #ifndef HAVE_EAFD e.g. Linux) */
 static int ad_flush_rf(struct adouble *ad)
 {
     ssize_t len;

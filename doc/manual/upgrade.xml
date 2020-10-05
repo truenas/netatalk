@@ -120,7 +120,7 @@
 
       <para>As these days the only applications making use of Resource Forks
       are Adobe Photoshop (image preview) and Postscript Type 1 fonts, even on
-      eg Linux you’ll get rid of 99% of any extra Netatalk AppleDouble files
+      e.g. Linux you’ll get rid of 99% of any extra Netatalk AppleDouble files
       (and folders).</para>
     </sect2>
 
@@ -137,8 +137,8 @@
 
           <listitem>
             <para>The CNID databases are now stored under
-              <filename>/var/netatalk/CNID/</filename>
-              by default. You can use configure --localstatedir=PATH at
+              <filename>/var/lib/netatalk/CNID/</filename>
+              on Debian systems. You can use configure --localstatedir=PATH at
               compile time to change the location.</para>
           </listitem>
 
@@ -183,8 +183,8 @@
 
         <listitem>
           <para>Move <filename>afp_voluuid.conf</filename> and
-          <filename>afp_signature.conf</filename> to the localstate directory (default
-          <filename>/var/netatalk/</filename>), you can use <command>afpd -v</command>
+          <filename>afp_signature.conf</filename> to the localstate directory (Debian uses
+          <filename>/var/lib/netatalk/</filename>), you can use <command>afpd -v</command>
           in order to find the correct path</para>
         </listitem>
 

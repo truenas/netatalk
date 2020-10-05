@@ -1,0 +1,22 @@
+Local build linked against OpenSSL
+----------------------------------
+
+Netatalk in Debian does not include DHX or Randnum UAMs
+needed for secure access from earlier releases of macOS,
+or the GSS UAM needed to authenticate with Kerberos,
+because Netatalk license is incompatible with OpenSSL licensing.
+
+You can build locally with those OpenSSL-depending features
+using the following commands:
+
+  sudo apt install devscripts
+  sudo apt build-dep netatalk
+  sudo apt install libssl-dev libkrb5-dev libcrack2-dev
+  apt source netatalk
+  cd netatalk-*
+  dch -l +ssl -D local --force-distribution "Local build with OpenSSL."
+  DEB_AUTO_UPDATE_DEBIAN_CONTROL=1 DEB_BUILD_OPTIONS=openssl debuild -us -uc
+  sudo debi
+
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sat Feb 23 10:32:07 2019 +0100

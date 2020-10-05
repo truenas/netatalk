@@ -1,0 +1,10 @@
+  * resolve @pkgconfdir@ in manpages
+  * Strip extension from asip-status.pl
+  * Generate manpage for cnid2_create
+  * Strip pre-generated manpages from source, and generate with docbook.
+  * Link with system shared libevent-dev
+    when possible without linking with OpenSSL.
+  * Maybe link with libev-libevent-dev instead of libevent-dev.
+    Comparison: <http://libev.schmorp.de/bench.html>
+  * Maybe generate utf16_casetable.h utf16_case.c during build
+    using contrib/shell_utils/make-casetable.pl.

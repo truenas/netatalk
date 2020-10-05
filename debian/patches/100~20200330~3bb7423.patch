@@ -1,0 +1,24 @@
+Description: Fix garbage read in bsd_attr_list
+ Calling memmove(3) for one byte more
+ than what was retrieved by extattr_list_link(2)
+ causes clang on FreeBSD to complain
+ about a heap buffer overflow
+ when we try to read that byte at line 362.
+ .
+ Found with Clang's address sanitizer.
+Author: Jose Quinteiro <github@quinteiro.org>
+Bug: https://github.com/Netatalk/Netatalk/pull/127
+Last-Update: 2020-09-25
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/libatalk/vfs/extattr.c
++++ b/libatalk/vfs/extattr.c
+@@ -354,7 +354,7 @@
+ 
+     /* Convert from pascal strings to C strings */
+     len = list[0];
+-    memmove(list, list + 1, list_size);
++    memmove(list, list + 1, list_size - 1);
+ 
+     for(i = len; i < list_size; ) {
+         LOG(log_maxdebug, logtype_afpd, "len: %d, i: %d", len, i);

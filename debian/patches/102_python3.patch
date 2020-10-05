@@ -1,0 +1,23 @@
+Description: Use Python3
+Author: Jonas Smedegaard <dr@jones.dk>
+Forwarded: no
+Last-Update: 2019-02-15
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/contrib/shell_utils/afpstats
++++ b/contrib/shell_utils/afpstats
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/python3
+ 
+ usage = """Usage:
+ python afpstats.py
+@@ -23,7 +23,7 @@
+ 
+     reply = iface.GetUsers()
+     for name in reply:
+-        print name
++        print(name)
+ 
+ if __name__ == '__main__':
+     main()

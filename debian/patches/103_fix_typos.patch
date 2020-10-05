@@ -1,0 +1,1088 @@
+Description: Fix user-visible typos in log output and documentation
+Author: Jonas Smedegaard <dr@jones.dk>
+Reviewed-By: Brian Campbell <brian.campbell@editshare.com>
+Forwarded: no
+Bug-Debian: https://bugs.debian.org/685162
+Last-Update: 2014-02-11
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/etc/afpd/afp_dsi.c
++++ b/etc/afpd/afp_dsi.c
+@@ -185,7 +185,7 @@
+         exit(EXITERR_CLNT);
+     }
+ 
+-    LOG(log_note, logtype_afpd, "afp_dsi_transfer_session: succesfull primary reconnect");
++    LOG(log_note, logtype_afpd, "afp_dsi_transfer_session: successful primary reconnect");
+     /* 
+      * Now returning from this signal handler return to dsi_receive which should start
+      * reading/continuing from the connected socket that was passed via the parent from
+--- a/NEWS
++++ b/NEWS
+@@ -477,7 +477,7 @@
+ * NEW: afpd: new LDAP config option ldap_uuid_string
+ * UPD: based on Unicode 6.1.0
+ * UPD: experimental systemd service files: always run both afpd and cnid_metad
+-* UPD: afpd: Ensure our umask is not altered by eg pam_umask
++* UPD: afpd: Ensure our umask is not altered by e.g. pam_umask
+ * UPD: afpd: Use GSS_C_NO_NAME as server principal when Kerberos options -fqdn
+        and -krb5service are not set, from Jamie Gilbertson
+ * UPD: afpd: Changed behaviour for TimeMachine volumes in case there's a problem
+@@ -491,7 +491,7 @@
+        NetAFP Bug ID #16
+ * FIX: afpd: Close IPC fds in afpd session child inherited from the afpd
+        master process
+-* FIX: dbd: Don't remove BerkeleyDB if it's still in use by eg cnid_dbd, fixes
++* FIX: dbd: Don't remove BerkeleyDB if it's still in use by e.g. cnid_dbd, fixes
+        bug introduced in 2.2.2
+ * FIX: debian initscript: start avahi-daemon (if available) before atalkd
+ * FIX: Zeroconf could not advertise non-ASCII time machine volume name
+@@ -499,7 +499,7 @@
+ Changes in 2.2.2
+ ================
+ 
+-* NEW: afpd: New option "adminauthuser". Specifying eg "-adminauthuser root"
++* NEW: afpd: New option "adminauthuser". Specifying e.g. "-adminauthuser root"
+        whenever a normal user login fails, afpd tries to authenticate as
+        the specified adminauthuser. If this succeeds, a normal session is
+        created for the original connecting user. Said differently: if you
+@@ -569,7 +569,7 @@
+ * FIX: afpd: return correct user/group type when mapping UUIDs to names
+ * FIX: afpd: for directories add DARWIN_ACE_DELETE ACE
+        if DARWIN_ACE_ADD_SUBDIRECTORY is set
+-* FIX: afpd: afpd crashed when it failed to register with Avahi because eg
++* FIX: afpd: afpd crashed when it failed to register with Avahi because e.g.
+        user service registration is disabled in the Avahi config
+ * FIX: dbd: function checking and removing malformed ad:ea header files failed
+        to chdir back to the original working directory
+@@ -707,7 +707,7 @@
+ 
+ * FIX: afpd: Fix for LDAP user cache corruption
+ * FIX: afpd: Fix for not shown ACLs for when filesyem uid or gid
+-       couldn't be resolved because (eg deleted users/groups)
++       couldn't be resolved because (e.g. deleted users/groups)
+ * FIX: gentoo: cannot set $CNID_CONFIG
+ * FIX: ubuntu: servername was empty
+ * FIX: Solaris: configure script failed to enable DDP module
+@@ -764,7 +764,7 @@
+ * UPD: afpd: don't and permissions with parent folder when creating new
+        directories on "upriv" volumes.
+ * UPD: afpd: use 'afpserver@fqdn' instead of 'afpserver/fqdn@realm'.
+-       Prevents a crash in older GNU GSSAPI libs on eg. CentOS 5.x.
++       Prevents a crash in older GNU GSSAPI libs on e.g. CentOS 5.x.
+  
+ Changes in 2.1.1
+ ================
+@@ -844,7 +844,7 @@
+ * FIX: afpd: UNIX permissions handling
+ * FIX: cnid_dbd: always use BerkeleyDB transactions
+ * FIX: initscripts installation now correctly uses autoconf paths,
+-       ie they're installed to --sysconfdir.
++       i.e. they're installed to --sysconfdir.
+ * FIX: UTF-8 volume name length
+ * FIX: atalkd: workaround for broken Linux 2.6 AT kernel module:
+        Linux 2.6 sends broadcast queries to the first available socket
+@@ -878,7 +878,7 @@
+        'perm' value OR with the client requested permissions. (help with OSX 10.5
+        strange permissions).
+        Make dot files visible by default with 'usedots', use 'invisibledots' 
+-       for keeping the old behavior, ie for OS9 (OSX hide dot files on its
++       for keeping the old behavior, i.e. for OS9 (OSX hide dot files on its
+        own).
+ * NEW: afpd: volume options allow_hosts/denied hosts
+ * NEW: afpd: volume options dperm/fperm default directory and file
+--- a/etc/afpd/acls.c
++++ b/etc/afpd/acls.c
+@@ -783,7 +783,7 @@
+ /*!
+  * Map Darwin ACL to POSIX ACL.
+  *
+- * aclp must point to a acl_init'ed acl_t or an acl_t that can eg contain default ACEs.
++ * aclp must point to a acl_init'ed acl_t or an acl_t that can e.g. contain default ACEs.
+  * Mapping pecularities:
+  * - we create a default ace (which inherits to files and dirs) if either
+      DARWIN_ACE_FLAGS_FILE_INHERIT or DARWIN_ACE_FLAGS_DIRECTORY_INHERIT is requested
+@@ -1555,7 +1555,7 @@
+     if (!s_path->st_valid)
+         of_statdir(vol, s_path);
+     if ( s_path->st_errno != 0 ) {
+-        LOG(log_error, logtype_afpd, "afp_getacl: cant stat");
++        LOG(log_error, logtype_afpd, "afp_getacl: can't stat");
+         return AFPERR_NOOBJ;
+     }
+ 
+@@ -1611,7 +1611,7 @@
+     if (!s_path->st_valid)
+         of_statdir(vol, s_path);
+     if ( s_path->st_errno != 0 ) {
+-        LOG(log_error, logtype_afpd, "afp_getacl: cant stat");
++        LOG(log_error, logtype_afpd, "afp_getacl: can't stat");
+         return AFPERR_NOOBJ;
+     }
+ 
+@@ -1698,7 +1698,7 @@
+     if (!s_path->st_valid)
+         of_statdir(vol, s_path);
+     if ( s_path->st_errno != 0 ) {
+-        LOG(log_error, logtype_afpd, "afp_setacl: cant stat");
++        LOG(log_error, logtype_afpd, "afp_setacl: can't stat");
+         return AFPERR_NOOBJ;
+     }
+     LOG(log_debug, logtype_afpd, "afp_setacl: unixname: %s", s_path->u_name);
+--- a/etc/cnid_dbd/cmd_dbd.c
++++ b/etc/cnid_dbd/cmd_dbd.c
+@@ -253,7 +253,7 @@
+     vol->v_cdb = cnid_open(vol, vol->v_cnidscheme,
+                            vol->v_flags & AFPVOL_NODEV ? CNID_FLAG_NODEV : 0);
+     if (vol->v_cdb == NULL) {
+-        dbd_log(LOGSTD, "Cant initialize CNID database connection for %s", vol->v_path);
++        dbd_log(LOGSTD, "Can't initialize CNID database connection for %s", vol->v_path);
+         exit(EXIT_FAILURE);
+     }
+ 
+--- a/etc/cnid_dbd/cmd_dbd_scanvol.c
++++ b/etc/cnid_dbd/cmd_dbd_scanvol.c
+@@ -393,7 +393,7 @@
+ 
+         /* Inherit owner/group from "." to ".AppleDouble" and ".Parent" */
+         if ((lstat(".", &st)) != 0) {
+-            dbd_log( LOGSTD, "Couldnt stat %s: %s", cwdbuf, strerror(errno));
++            dbd_log( LOGSTD, "Couldn't stat %s: %s", cwdbuf, strerror(errno));
+             return -1;
+         }
+         chown(ADv2_DIRNAME, st.st_uid, st.st_gid);
+@@ -769,16 +769,16 @@
+         /**************************************************************************
+           Recursion
+         **************************************************************************/
+-        if (S_ISDIR(st.st_mode) && cnid) { /* If we have no cnid for it we cant enter recursion */
++        if (S_ISDIR(st.st_mode) && cnid) { /* If we have no cnid for it we can't enter recursion */
+             strcat(cwdbuf, "/");
+             strcat(cwdbuf, name);
+             dbd_log( LOGDEBUG, "Entering directory: %s", cwdbuf);
+             if (-1 == (cwd = open(".", O_RDONLY))) {
+-                dbd_log( LOGSTD, "Cant open directory '%s': %s", cwdbuf, strerror(errno));
++                dbd_log( LOGSTD, "Can't open directory '%s': %s", cwdbuf, strerror(errno));
+                 continue;
+             }
+             if (0 != chdir(name)) {
+-                dbd_log( LOGSTD, "Cant chdir to directory '%s': %s", cwdbuf, strerror(errno));
++                dbd_log( LOGSTD, "Can't chdir to directory '%s': %s", cwdbuf, strerror(errno));
+                 close(cwd);
+                 continue;
+             }
+--- a/etc/cnid_dbd/dbif.c
++++ b/etc/cnid_dbd/dbif.c
+@@ -116,7 +116,7 @@
+     if (dbif_put(dbd, DBIF_CNID, &key, &data, 0) < 0)
+         return -1;
+     if (dbif_txn_commit(dbd) != 1) {
+-        LOG(log_error, logtype_cnid, "dbif_init_rootinfo: cant commit txn");
++        LOG(log_error, logtype_cnid, "dbif_init_rootinfo: can't commit txn");
+         return -1;
+     }
+ 
+@@ -591,7 +591,7 @@
+                                       dbd->db_table[i].type,
+                                       dbd->db_table[i].openflags,
+                                       0664) < 0) {
+-            LOG(log_error, logtype_cnid, "Cant open database");
++            LOG(log_error, logtype_cnid, "Can't open database");
+             return -1;
+         }
+ 
+--- a/libatalk/adouble/ad_open.c
++++ b/libatalk/adouble/ad_open.c
+@@ -1917,7 +1917,7 @@
+ /*!
+  * @brief open metadata, possibly as root
+  *
+- * Return only metadata but try very hard ie at first try as user, then try as root.
++ * Return only metadata but try very hard i.e. at first try as user, then try as root.
+  *
+  * @param name  name of file/dir
+  * @param flags ADFLAGS_DIR: name is a directory \n
+@@ -1966,7 +1966,7 @@
+     if (dirfd != -1) {
+ 
+         if (fchdir(cwdfd) != 0) {
+-            LOG(log_error, logtype_ad, "ad_openat: cant chdir back, exiting");
++            LOG(log_error, logtype_ad, "ad_openat: can't chdir back, exiting");
+             exit(EXITERR_SYS);
+         }
+     }
+@@ -2049,7 +2049,7 @@
+ 
+     if (dirfd != -1) {
+         if (fchdir(cwdfd) != 0) {
+-            AFP_PANIC("ad_openat: cant chdir back");
++            AFP_PANIC("ad_openat: can't chdir back");
+         }
+     }
+ 
+--- a/libatalk/vfs/ea_sys.c
++++ b/libatalk/vfs/ea_sys.c
+@@ -536,7 +536,7 @@
+ 
+     if (sfd != -1) {
+         if ((cwd = open(".", O_RDONLY)) == -1) {
+-            LOG(log_error, logtype_afpd, "sys_ea_copyfile: cant open cwd: %s",
++            LOG(log_error, logtype_afpd, "sys_ea_copyfile: can't open cwd: %s",
+                 strerror(errno));
+             ret = -1;
+             goto getout;
+@@ -545,7 +545,7 @@
+ 
+     if (sfd != -1) {
+         if (fchdir(sfd) == -1) {
+-            LOG(log_error, logtype_afpd, "sys_ea_copyfile: cant chdir to sfd: %s",
++            LOG(log_error, logtype_afpd, "sys_ea_copyfile: can't chdir to sfd: %s",
+                 strerror(errno));
+             ret = -1;
+             goto getout;
+@@ -575,7 +575,7 @@
+ 
+     if (sfd != -1) {
+         if (fchdir(cwd) == -1) {
+-            LOG(log_error, logtype_afpd, "sys_ea_copyfile: cant chdir to cwd: %s",
++            LOG(log_error, logtype_afpd, "sys_ea_copyfile: can't chdir to cwd: %s",
+                 strerror(errno));
+             ret = -1;
+             goto getout;
+@@ -604,7 +604,7 @@
+ 
+         if (sfd != -1) {
+             if (fchdir(sfd) == -1) {
+-                LOG(log_error, logtype_afpd, "sys_ea_copyfile: cant chdir to sfd: %s",
++                LOG(log_error, logtype_afpd, "sys_ea_copyfile: can't chdir to sfd: %s",
+                     strerror(errno));
+                 ret = -1;
+                 goto getout;
+@@ -629,7 +629,7 @@
+ 
+         if (sfd != -1) {
+             if (fchdir(cwd) == -1) {
+-                LOG(log_error, logtype_afpd, "sys_ea_copyfile: cant chdir to cwd: %s",
++                LOG(log_error, logtype_afpd, "sys_ea_copyfile: can't chdir to cwd: %s",
+                     strerror(errno));
+                 ret = -1;
+                 goto getout;
+--- a/libatalk/vfs/unix.c
++++ b/libatalk/vfs/unix.c
+@@ -356,7 +356,7 @@
+     ret = opendir(path);
+ 
+     if (dirfd != -1 && fchdir(cwd) != 0) {
+-        LOG(log_error, logtype_afpd, "opendirat: cant chdir back. exit!");
++        LOG(log_error, logtype_afpd, "opendirat: can't chdir back. exit!");
+         exit(EXITERR_SYS);
+     }
+ 
+--- a/libatalk/vfs/ea_ad.c
++++ b/libatalk/vfs/ea_ad.c
+@@ -54,7 +54,7 @@
+ {
+     /* Same as ad_hf_mode(mode) */
+     mode &= ~(S_IXUSR | S_IXGRP | S_IXOTH);
+-    /* Owner must be able to open, read and w-lock it, in order to chmod from eg 0000 -> 0xxxx*/
++    /* Owner must be able to open, read and w-lock it, in order to chmod from e.g. 0000 -> 0xxxx*/
+     mode |= S_IRUSR | S_IWUSR;
+     return mode;
+ }
+@@ -383,10 +383,10 @@
+  *
+  * Creates EA header file and initialize ea->ea_data buffer.
+  * Possibe race condition with other afpd processes:
+- * we were called because header file didn't exist in eg. ea_open. We then
++ * we were called because header file didn't exist in e.g. ea_open. We then
+  * try to create a file with O_CREAT | O_EXCL, but the whole process in not atomic.
+  * What do we do then? Someone else is in the process of creating the header too, but
+- * it might not have finished it. That means we cant just open, read and use it!
++ * it might not have finished it. That means we can't just open, read and use it!
+  * We therefor currently just break with an error.
+  * On return the header file is still r/w locked.
+  */
+@@ -680,7 +680,7 @@
+     ea->ea_flags = eaflags;
+     ea->dirfd = -1;             /* no *at (cf openat) semantics by default */
+ 
+-    /* Dont care for errors, eg when removing the file is already gone */
++    /* Dont care for errors, e.g. when removing the file is already gone */
+     if (!stat(uname, &st) && S_ISDIR(st.st_mode))
+         ea->ea_flags |=  EA_DIR;
+ 
+@@ -853,7 +853,7 @@
+ 
+     if (dirfd != -1) {
+         if (fchdir(cwdfd) != 0) {
+-            LOG(log_error, logtype_afpd, "ea_openat: cant chdir back, exiting");
++            LOG(log_error, logtype_afpd, "ea_openat: can't chdir back, exiting");
+             exit(EXITERR_SYS);
+         }
+     }
+@@ -1367,7 +1367,7 @@
+     }
+ 
+     if (dirfd != -1 && fchdir(cwd) != 0) {
+-        LOG(log_error, logtype_afpd, "ea_deletefile: cant chdir back. exit!");
++        LOG(log_error, logtype_afpd, "ea_deletefile: can't chdir back. exit!");
+         exit(EXITERR_SYS);
+     }
+ 
+@@ -1748,7 +1748,7 @@
+         eaname = (*ea.ea_entries)[count].ea_name;
+         /*
+          * Be careful with EA names from the EA header!
+-         * Eg NFS users might have access to them, can inject paths using ../ or /.....
++         * E.g. NFS users might have access to them, can inject paths using ../ or /.....
+          * FIXME:
+          * Until the EA code escapes / in EA name requests from the client, these therefor wont work.
+          */
+--- a/man/man5/afp.conf.5.in
++++ b/man/man5/afp.conf.5.in
+@@ -264,7 +264,7 @@
+ .PP
+ admin auth user = \fIuser\fR \fB(G)\fR
+ .RS 4
+-Specifying eg "\fBadmin auth user = root\fR" whenever a normal user login fails, afpd will try to authenticate as the specified
++Specifying e\%.g\&. "\fBadmin auth user = root\fR" whenever a normal user login fails, afpd will try to authenticate as the specified
+ \fBadmin auth user\fR\&. If this succeeds, a normal session is created for the original connecting user\&. Said differently: if you know the password of
+ \fBadmin auth user\fR, you can authenticate as any other user\&.
+ .RE
+@@ -291,7 +291,7 @@
+ .PP
+ nt domain = \fIDOMAIN\fR \fB(G)\fR, nt separator = \fISEPARATOR\fR \fB(G)\fR
+ .RS 4
+-Use for eg\&. winbind authentication, prepends both strings before the username from login and then tries to authenticate with the result through the available and active UAM authentication modules\&.
++Use for e\&.g\&. winbind authentication, prepends both strings before the username from login and then tries to authenticate with the result through the available and active UAM authentication modules\&.
+ .RE
+ .PP
+ save password = \fIBOOLEAN\fR (default: \fIyes\fR) \fB(G)\fR
+@@ -544,7 +544,7 @@
+ .RS 4
+ Regular expression which matches the parent directory of the user homes\&. If
+ \fBbasedir regex\fR
+-contains symlink, you must set the canonicalized absolute path\&. In the simple case this is just a path ie
++contains symlink, you must set the canonicalized absolute path\&. In the simple case this is just a path i\&.e\&.
+ \fBbasedir regex = /home\fR
+ .RE
+ .PP
+@@ -1005,7 +1005,7 @@
+ .RE
+ .RE
+ .PP
+-If you want to be able to display ACLs on the client, you must setup both client and server as part on a authentication domain (directory service, eg LDAP, Open Directory, Active Directory)\&. The reason is, in OS X ACLs are bound to UUIDs, not just uid\*(Aqs or gid\*(Aqs\&. Therefor Netatalk must be able to map every filesystem uid and gid to a UUID so that it can return the server side ACLs which are bound to UNIX uid and gid mapped to OS X UUIDs\&.
++If you want to be able to display ACLs on the client, you must setup both client and server as part on a authentication domain (directory service, e\&.g\&. LDAP, Open Directory, Active Directory)\&. The reason is, in OS X ACLs are bound to UUIDs, not just uid\*(Aqs or gid\*(Aqs\&. Therefor Netatalk must be able to map every filesystem uid and gid to a UUID so that it can return the server side ACLs which are bound to UNIX uid and gid mapped to OS X UUIDs\&.
+ .PP
+ Netatalk can query a directory server using LDAP queries\&. Either the directory server already provides an UUID attribute for user and groups (Active Directory, Open Directory) or you reuse an unused attribute (or add a new one) to you directory server (eg OpenLDAP)\&.
+ .PP
+@@ -1108,7 +1108,7 @@
+ .PP
+ string
+ .RS 4
+-UUID is a string, use with eg OpenDirectory\&.
++UUID is a string, use with e\&.g\&. OpenDirectory\&.
+ .RE
+ .PP
+ ms\-guid
+@@ -1326,7 +1326,7 @@
+ .PP
+ veto files = \fIvetoed names\fR \fB(V)\fR
+ .RS 4
+-hide files and directories,where the path matches one of the \*(Aq/\*(Aq delimited vetoed names\&. The veto string must always be terminated with a \*(Aq/\*(Aq, eg\&. "veto files = veto1/", "veto files = veto1/veto2/"\&.
++hide files and directories,where the path matches one of the \*(Aq/\*(Aq delimited vetoed names\&. The veto string must always be terminated with a \*(Aq/\*(Aq, e\.&g\&. "veto files = veto1/", "veto files = veto1/veto2/"\&.
+ .RE
+ .SS "Volume options"
+ .PP
+@@ -1359,7 +1359,7 @@
+ .PP
+ cnid dev = \fIBOOLEAN\fR (default: \fIyes\fR) \fB(V)\fR
+ .RS 4
+-Whether to use the device number in the CNID backends\&. Helps when the device number is not constant across a reboot, eg cluster, \&.\&.\&.
++Whether to use the device number in the CNID backends\&. Helps when the device number is not constant across a reboot, e\&.g\&. cluster, \&.\&.\&.
+ .RE
+ .PP
+ convert appledouble = \fIBOOLEAN\fR (default: \fIyes\fR) \fB(V)\fR
+@@ -1432,7 +1432,7 @@
+ .PP
+ search db = \fIBOOLEAN\fR (default: \fIno\fR) \fB(V)\fR
+ .RS 4
+-Use fast CNID database namesearch instead of slow recursive filesystem search\&. Relies on a consistent CNID database, ie Samba or local filesystem access lead to inaccurate or wrong results\&. Works only for "dbd" CNID db volumes\&.
++Use fast CNID database namesearch instead of slow recursive filesystem search\&. Relies on a consistent CNID database, i\&.e\&. Samba or local filesystem access lead to inaccurate or wrong results\&. Works only for "dbd" CNID db volumes\&.
+ .RE
+ .PP
+ stat vol = \fIBOOLEAN\fR (default: \fIyes\fR) \fB(V)\fR
+--- a/man/man8/cnid_dbd.8.in
++++ b/man/man8/cnid_dbd.8.in
+@@ -181,7 +181,7 @@
+ .PP
+ Note that the first version to appear
+ \fIafter\fR
+-Netatalk 2\&.1 ie Netatalk 2\&.1\&.1, will support BerkeleyDB updates on the fly without manual intervention\&. In other words Netatalk 2\&.1 does contain code to prepare the BerkeleyDB database for upgrades and to upgrade it in case it has been prepared before\&. That means it can\*(Aqt upgrade a 2\&.0\&.x version because that one didn\*(Aqt prepare the database\&.
++Netatalk 2\&.1 i\&.e\&. Netatalk 2\&.1\&.1, will support BerkeleyDB updates on the fly without manual intervention\&. In other words Netatalk 2\&.1 does contain code to prepare the BerkeleyDB database for upgrades and to upgrade it in case it has been prepared before\&. That means it can\*(Aqt upgrade a 2\&.0\&.x version because that one didn\*(Aqt prepare the database\&.
+ .PP
+ In order to update between older Netatalk releases using different BerkeleyDB library versions, follow this steps:
+ .sp
+--- a/doc/manpages/man5/afp.conf.5.xml
++++ b/doc/manpages/man5/afp.conf.5.xml
+@@ -287,7 +287,7 @@
+           <type>(G)</type></term>
+ 
+           <listitem>
+-            <para>Specifying eg "<option>admin auth user = root</option>"
++            <para>Specifying e.g. "<option>admin auth user = root</option>"
+             whenever a normal user login fails, afpd will try to authenticate
+             as the specified <option>admin auth user</option>. If this
+             succeeds, a normal session is created for the original connecting
+@@ -354,7 +354,7 @@
+           <type>(G)</type></term>
+ 
+           <listitem>
+-            <para>Use for eg. winbind authentication, prepends both strings
++            <para>Use for e.g. winbind authentication, prepends both strings
+             before the username from login and then tries to authenticate with
+             the result through the available and active UAM authentication
+             modules.</para>
+@@ -824,7 +824,7 @@
+             <para>Regular expression which matches the parent directory of the
+             user homes. If <option>basedir regex</option> contains symlink,
+             you must set the canonicalized absolute path. In the simple case
+-            this is just a path ie <option>basedir regex =
++            this is just a path i.e. <option>basedir regex =
+             /home</option></para>
+           </listitem>
+         </varlistentry>
+@@ -1444,7 +1444,7 @@
+ 
+       <para>If you want to be able to display ACLs on the client, you must
+       setup both client and server as part on a authentication domain
+-      (directory service, eg LDAP, Open Directory, Active Directory). The
++      (directory service, e.g. LDAP, Open Directory, Active Directory). The
+       reason is, in OS X ACLs are bound to UUIDs, not just uid's or gid's.
+       Therefor Netatalk must be able to map every filesystem uid and gid to a
+       UUID so that it can return the server side ACLs which are bound to UNIX
+@@ -1630,7 +1630,7 @@
+                   <term>string</term>
+ 
+                   <listitem>
+-                    <para>UUID is a string, use with eg OpenDirectory.</para>
++                    <para>UUID is a string, use with e.g. OpenDirectory.</para>
+                   </listitem>
+                 </varlistentry>
+ 
+@@ -1989,7 +1989,7 @@
+           <listitem>
+             <para>hide files and directories,where the path matches one of the
+             '/' delimited vetoed names. The veto string must always be
+-            terminated with a '/', eg. "veto files = veto1/", "veto files =
++            terminated with a '/', e.g. "veto files = veto1/", "veto files =
+             veto1/veto2/".</para>
+           </listitem>
+         </varlistentry>
+@@ -2035,7 +2035,7 @@
+ 
+           <listitem>
+             <para>Whether to use the device number in the CNID backends. Helps
+-            when the device number is not constant across a reboot, eg
++            when the device number is not constant across a reboot, e.g.
+             cluster, ...</para>
+           </listitem>
+         </varlistentry>
+@@ -2154,7 +2154,7 @@
+ 
+           <listitem>
+             <para>Use fast CNID database namesearch instead of slow recursive
+-            filesystem search. Relies on a consistent CNID database, ie Samba
++            filesystem search. Relies on a consistent CNID database, i.e. Samba
+             or local filesystem access lead to inaccurate or wrong results.
+             Works only for "dbd" CNID db volumes.</para>
+           </listitem>
+--- a/doc/manual/configuration.xml
++++ b/doc/manual/configuration.xml
+@@ -49,7 +49,7 @@
+ 
+           <secondary>UNIX symlink</secondary>
+         </indexterm> can be used on the server. Semantics are the same as for
+-      eg NFS, ie they are not resolved on the server side but instead it's
++      e.g. NFS, i.e. they are not resolved on the server side but instead it's
+       completely up to the client to resolve them, resulting in links that
+       point somewhere inside the clients filesystem view.</para>
+ 
+@@ -95,7 +95,7 @@
+         available whose path is <filename>/home/NAME</filename>.</para>
+ 
+         <para>A more complex setup would be a server with a large amount of
+-        user homes which are split across eg two different
++        user homes which are split across e.g. two different
+         filesystems:<itemizedlist>
+             <listitem>
+               <para>/RAID1/homes</para>
+@@ -895,7 +895,7 @@
+ uams_dhx2.so -&gt; uams_dhx2_pam.so</programlisting> then you're using PAM,
+         otherwise classic Unix passwords. The main advantage of using PAM is
+         that one can integrate Netatalk in centralized authentication
+-        scenarios, eg. via LDAP, NIS and the like. Please always keep in mind
++        scenarios, e.g. via LDAP, NIS and the like. Please always keep in mind
+         that the protection of your user's login credentials in such scenarios
+         also depends on the strength of encryption that the UAM in question
+         supplies. So think about eliminating weak UAMs like "ClearTxt Passwrd"
+@@ -1219,7 +1219,7 @@
+         will you be able to see the ACLs, that's a result of how ACLs in OS X
+         are designed. If you want to be able to display ACLs on the client,
+         things get more involved as you must then setup both client and server
+-        to be part on a authentication domain (directory service, eg LDAP,
++        to be part on a authentication domain (directory service, e.g. LDAP,
+         OpenDirectory). The reason is, that in OS X ACLs are bound to UUIDs,
+         not just uid's or gid's. Therefore afpd must be able to map every
+         filesystem uid and gid to a UUID so that it can return the server side
+@@ -1551,7 +1551,7 @@
+ 
+       <para>In case the <command>dbus-daemon</command> binary is installed
+       at the other path, you must use the
+-      global option <option>dbus daemon</option> to point to the path, eg for
++      global option <option>dbus daemon</option> to point to the path, e.g. for
+       Solaris with Tracker from OpenCSW: <screen>dbus daemon = /opt/csw/bin/dbus-daemon</screen></para>
+     </sect2>
+ 
+--- a/etc/afpd/directory.c
++++ b/etc/afpd/directory.c
+@@ -77,7 +77,7 @@
+ 
+ /*
+  * dir_remove queues struct dirs to be freed here. We can't just delete them immeidately
+- * eg in dircache_search_by_id, because a caller somewhere up the stack might be
++ * e.g. in dircache_search_by_id, because a caller somewhere up the stack might be
+  * referencing it.
+  * So instead:
+  * - we mark it as invalid by setting d_did to CNID_INVALID (ie 0)
+@@ -370,7 +370,7 @@
+  * 1. move cwd into parent dir (we're often already there, but not always)
+  * 2. set struct path to the dirname
+  * 3. in case of
+- *    AFPERR_ACCESS: the dir is there, we just cant chdir into it
++ *    AFPERR_ACCESS: the dir is there, we just can't chdir into it
+  *    AFPERR_NOOBJ: the dir was there when we stated it in cname, so we have a race
+  *                  4. indicate there's no dir for this path
+  *                  5. remove the dir
+@@ -1048,8 +1048,8 @@
+  * @brief Resolve a catalog node name path
+  *
+  * 1. Evaluate path type
+- * 2. Move to start dir, if we cant, it might eg because of EACCES, build
+- *    path from dirname, so eg getdirparams has sth it can chew on. curdir
++ * 2. Move to start dir, if we can't, it might be e.g. because of EACCES, build
++ *    path from dirname, so e.g. getdirparams has sth it can chew on. curdir
+  *    is dir parent then. All this is done in path_from_dir().
+  * 3. Parse next cnode name in path, cases:
+  * 4.   single "\0" -> do nothing
+@@ -1195,7 +1195,7 @@
+                 return NULL;
+         } else {
+             /*
+-             * CNID != 1, eg. most of the times we take this way.
++             * CNID != 1, e.g. most of the times we take this way.
+              * Now check if current path-part is a file or dir:
+              * o if it's dir we have to step into it
+              * o if it's a file we expect it to be the last part of the requested path
+@@ -1734,7 +1734,7 @@
+ }
+ 
+ /*
+- * assume path == '\0' eg. it's a directory in canonical form
++ * assume path == '\0' e.g. it's a directory in canonical form
+  */
+ int setdirparams(struct vol *vol, struct path *path, uint16_t d_bitmap, char *buf )
+ {
+--- a/libatalk/acl/ldap_config.c
++++ b/libatalk/acl/ldap_config.c
+@@ -62,7 +62,7 @@
+                     *((const char **)(ldap_prefs[i].pref)) = strdup(val);
+             } else {
+                 /* ok, we have string to int mapping for this pref
+-                   eg. "none", "simple", "sasl" map to 0, 128, 129 */
++                   e.g. "none", "simple", "sasl" map to 0, 128, 129 */
+                 for (j = 0; prefs_array[j].pref != NULL; j++) {
+                     if ((strcmp(prefs_array[j].pref, ldap_prefs[i].name) == 0)
+                         && (strcmp(prefs_array[j].valuestring, val) == 0)) {
+--- a/doc/manpages/man8/cnid_dbd.8.xml
++++ b/doc/manpages/man8/cnid_dbd.8.xml
+@@ -204,7 +204,7 @@
+     <title>UPDATING</title>
+ 
+     <para>Note that the first version to appear <emphasis>after</emphasis>
+-    Netatalk 2.1 ie Netatalk 2.1.1, will support BerkeleyDB updates on the fly
++    Netatalk 2.1 i.e. Netatalk 2.1.1, will support BerkeleyDB updates on the fly
+     without manual intervention. In other words Netatalk 2.1 does contain code
+     to prepare the BerkeleyDB database for upgrades and to upgrade it in case
+     it has been prepared before. That means it can't upgrade a 2.0.x version
+--- a/etc/afpd/catsearch.c
++++ b/etc/afpd/catsearch.c
+@@ -600,7 +600,7 @@
+             switch (S_IFMT & path.st.st_mode) {
+             case S_IFDIR:
+ 				/* here we can short cut 
+-				   ie if in the same loop the parent dir wasn't in the cache
++				   i.e. if in the same loop the parent dir wasn't in the cache
+ 				   ALL dirsearch_byname will fail.
+ 				*/
+                 unlen = strlen(path.u_name);
+--- a/etc/afpd/dircache.c
++++ b/etc/afpd/dircache.c
+@@ -46,13 +46,13 @@
+  *
+  * The directory cache caches directories and files(!). The main reason for having the cache
+  * is avoiding recursive walks up the path, querying the CNID database each time, when
+- * we have to calculate the location of eg directory with CNID 30, which is located in a dir with
++ * we have to calculate the location of e.g. directory with CNID 30, which is located in a dir with
+  * CNID 25, next CNID 20 and then CNID 2 (the volume root as per AFP spec).
+  * If all these dirs where in the cache, each database look up can be avoided. Additionally there's
+  * the element "fullpath" in struct dir, which is used to avoid the recursion in any case. Wheneveer
+  * a struct dir is initialized, the fullpath to the directory is stored there.
+  *
+- * In order to speed up the CNID query for files too, which eg happens when a directory is enumerated,
++ * In order to speed up the CNID query for files too, which e.g. happens when a directory is enumerated,
+  * files are stored too in the dircache. In order to differentiate between files and dirs, we set
+  * the flag DIRF_ISFILE in struct dir.d_flags for files.
+  *
+@@ -239,7 +239,7 @@
+  *
+  * The default is to remove the 256 oldest entries from the cache.
+  * 1. Get the oldest entry
+- * 2. If it's in use ie open forks reference it or it's curdir requeue it,
++ * 2. If it's in use i.e. open forks reference it or it's curdir requeue it,
+  *    don't remove it
+  * 3. Remove the dir from the main cache and the didname index
+  * 4. Free the struct dir structure and all its members
+--- a/etc/afpd/enumerate.c
++++ b/etc/afpd/enumerate.c
+@@ -86,12 +86,12 @@
+ }
+ 
+ /* ----------------------------- 
+- * FIXME: 
++ * FIXME:
+  * Doesn't work with dangling symlink
+- * ie: 
++ * i.e.:
+  * - Move a folder with a dangling symlink in the trash
+  * - empty the trash
+- * afp_enumerate return an empty listing but offspring count != 0 in afp_getdirparams 
++ * afp_enumerate return an empty listing but offspring count != 0 in afp_getdirparams
+  * and the Mac doesn't try to call afp_delete!
+  *
+  * Another option for symlink
+--- a/etc/cnid_dbd/dbd_lookup.c
++++ b/etc/cnid_dbd/dbd_lookup.c
+@@ -28,7 +28,7 @@
+ 1) UNIX rename (via mv) or inode reusage(!)
+ -------------------------------------------
+ Name is possibly changed (rename case) but inode is the same.
+-We should try to keep the CNID, but we cant, because inode reusage is probably
++We should try to keep the CNID, but we can't, because inode reusage is probably
+ much to frequent.
+ 
+ rename:
+@@ -70,7 +70,7 @@
+ If we got a hint and hint matches the CNID from devino we keep it and update
+ the record.
+ 
+-3) Restore from backup ie change of inode number -- or emacs
++3) Restore from backup i.e. change of inode number -- or emacs
+ ------------------------------------------------------------
+ 
+ 15  2   f   1   1       file
+--- a/etc/spotlight/sparql_parser.y
++++ b/etc/spotlight/sparql_parser.y
+@@ -32,7 +32,7 @@
+   static const char *map_daterange(const char *dateattr, time_t date1, time_t date2);
+   static time_t isodate2unix(const char *s);
+  
+- /* global vars, eg needed by the lexer */
++ /* global vars, e.g. needed by the lexer */
+   slq_t *ssp_slq;
+ 
+   /* local vars */
+@@ -93,7 +93,7 @@
+ 	/*
+ 	 * We can't properly handle these in expressions, fortunately this
+ 	 * is probably only ever used by OS X as sole element in an
+-	 * expression ie "False" (when Finder window selected our share
++	 * expression i.e. "False" (when Finder window selected our share
+ 	 * but no search string entered yet). Packet traces showed that OS
+ 	 * X Spotlight server then returns a failure (ie -1) which is what
+ 	 * we do here too by calling YYABORT.
+--- a/include/atalk/ea.h
++++ b/include/atalk/ea.h
+@@ -144,7 +144,7 @@
+  */
+ 
+ struct ea_entry {
+-    size_t       ea_namelen; /* len of ea_name without terminating 0 ie. strlen(ea_name)*/
++    size_t       ea_namelen; /* len of ea_name without terminating 0 i.e. strlen(ea_name)*/
+     size_t       ea_size;    /* size of EA*/
+     char         *ea_name;   /* name of the EA */
+ };
+--- a/libatalk/dsi/dsi_stream.c
++++ b/libatalk/dsi/dsi_stream.c
+@@ -72,7 +72,7 @@
+ 
+     while (1) {
+         if (dsi->socket == -1)
+-            /* eg dsi_disconnect() might have disconnected us */
++            /* e.g. dsi_disconnect() might have disconnected us */
+             return -1;
+         FD_ZERO(&readfds);
+         FD_ZERO(&writefds);
+@@ -252,7 +252,7 @@
+  *
+  * @returns  0 if successfully entered disconnected state
+  *          -1 if ppid is 1 which means afpd master died
+- *             or euid == 0 ie where still running as root (unauthenticated session)
++ *             or euid == 0 i.e. where still running as root (unauthenticated session)
+  */
+ int dsi_disconnect(DSI *dsi)
+ {
+--- a/libatalk/dsi/dsi_tcp.c
++++ b/libatalk/dsi/dsi_tcp.c
+@@ -412,7 +412,7 @@
+  * @param inport     (r)  pointer to port string
+  *
+  * Creates listening AFP/DSI socket. If the parameter inaddress is NULL, then we listen
+- * on the wildcard address, ie on all interfaces. That should mean listening on the IPv6
++ * on the wildcard address, i,e, on all interfaces. That should mean listening on the IPv6
+  * address "::" on IPv4/IPv6 dual stack kernels, accepting both v4 and v6 requests.
+  *
+  * If the parameter inaddress is not NULL, then we only listen on the given address.
+--- a/libatalk/util/netatalk_conf.c
++++ b/libatalk/util/netatalk_conf.c
+@@ -274,7 +274,7 @@
+  * This get's called from readvolfile with
+  * path = NULL, volname = NULL for xlating the volumes path
+  * path = path, volname = NULL for xlating the volumes name
+- * ... and from volumes options parsing code when xlating eg dbpath with
++ * ... and from volumes options parsing code when xlating e.g. dbpath with
+  * path = path, volname = volname
+  *
+  * Using this information we can reject xlation of any variable depeninding on a login
+@@ -505,7 +505,7 @@
+  * Get option string from config, use default value if not set
+  *
+  * @param conf    (r) config handle
+- * @param vol     (r) volume name (must be section name ie wo vars expanded)
++ * @param vol     (r) volume name (must be section name i.e. wo vars expanded)
+  * @param opt     (r) option
+  * @param defsec  (r) if "option" is not found in "vol", try to find it in section "defsec"
+  * @param defval  (r) if neither "vol" nor "defsec" contain "opt" return "defval"
+@@ -528,7 +528,7 @@
+  * Get boolean option from config, use default value if not set
+  *
+  * @param conf    (r) config handle
+- * @param vol     (r) volume name (must be section name ie wo vars expanded)
++ * @param vol     (r) volume name (must be section name i.e. wo vars expanded)
+  * @param opt     (r) option
+  * @param defsec  (r) if "option" is not found in "vol", try to find it in section "defsec"
+  * @param defval  (r) if neither "vol" nor "defsec" contain "opt" return "defval"
+@@ -555,7 +555,7 @@
+  * "vdg" means volume, default section or global
+  *
+  * @param conf    (r) config handle
+- * @param vol     (r) volume name (must be section name ie wo vars expanded)
++ * @param vol     (r) volume name (must be section name i.e. wo vars expanded)
+  * @param opt     (r) option
+  * @param defsec  (r) if "option" is not found in "vol", try to find it in section "defsec"
+  * @param defval  (r) if neither "vol" nor "defsec" contain "opt" return "defval"
+@@ -1011,7 +1011,7 @@
+     volume->v_qfd = -1;
+ #endif /* __svr4__ */
+ 
+-    /* os X start at 1 and use network order ie. 1 2 3 */
++    /* os X start at 1 and use network order i.e. 1 2 3 */
+     lastvid++;
+     if (lastvid == UINT16_MAX) {
+         LOG(log_error, logtype_default, "creatvol(\"%s\"): exceeded maximum number of volumes",
+@@ -1686,7 +1686,7 @@
+  * Path may be absolute or relative. Ordinary volume structs are created when
+  * the ini config is initially parsed (load_volumes()), but user volumes are
+  * as load_volumes() only can create the user volume of the logged in user
+- * in an AFP session in afpd, but not when called from eg cnid_metad or dbd.
++ * in an AFP session in afpd, but not when called from e.g. cnid_metad or dbd.
+  * Both cnid_metad and dbd thus need a way to lookup and create struct vols
+  * for user home by path. This is what this func does as well.
+  *
+--- a/libatalk/util/socket.c
++++ b/libatalk/util/socket.c
+@@ -47,7 +47,7 @@
+  * @brief set or unset non-blocking IO on a fd
+  *
+  * @param     fd         (r) File descriptor
+- * @param     cmd        (r) 0: disable non-blocking IO, ie block\n
++ * @param     cmd        (r) 0: disable non-blocking IO, i.e. block\n
+  *                           <>0: enable non-blocking IO
+  *
+  * @returns   0 on success, -1 on failure
+@@ -281,7 +281,7 @@
+ /*!
+  * @brief convert an IPv4 or IPv6 address to a static string using inet_ntop
+  *
+- * IPv6 mapped IPv4 addresses are returned as IPv4 addreses eg
++ * IPv6 mapped IPv4 addresses are returned as IPv4 addreses e.g.
+  * ::ffff:10.0.0.0 is returned as "10.0.0.0".
+  *
+  * @param  sa        (r) pointer to an struct sockaddr
+@@ -344,7 +344,7 @@
+  *
+  * Modifies IP address in sa->sin[6]_addr-s[6]_addr. The caller is responsible
+  * for passing a value for mask that is sensible to the passed address,
+- * eg 0 <= mask <= 32 for IPv4 or 0<= mask <= 128 for IPv6. mask > 32 for
++ * e.g. 0 <= mask <= 32 for IPv4 or 0<= mask <= 128 for IPv6. mask > 32 for
+  * IPv4 is treated as mask = 32, mask > 128 is set to 128 for IPv6.
+  *
+  * @param  ai        (rw) pointer to an struct sockaddr
+--- a/test/afpd/test.c
++++ b/test/afpd/test.c
+@@ -98,7 +98,7 @@
+ #endif
+ /*
+   FIXME: this doesn't work although it should. "//" get translated to \000 \000 at means ".."
+-  ie this should getfiledirparms for DIRDID_ROOT_PARENT -- at least afair!
++  i.e. this should getfiledirparms for DIRDID_ROOT_PARENT -- at least afair!
+     TEST_int(getfiledirparms(&configs->obj, vid, DIRDID_ROOT, "//"), 0);
+ */
+ #if 0
+--- a/doc/manual/install.xml
++++ b/doc/manual/install.xml
+@@ -309,7 +309,7 @@
+ 
+         <para>The tracker packages are found via pkg-config, you may have to
+         pass the version suffix as you may have a newer version installed then
+-        the default 0.12, eg</para>
++        the default 0.12, e.g.</para>
+ 
+         <screen><prompt>$ </prompt><userinput>pkg-config --list-all | grep tracker
+ </userinput>tracker-extract-0.16  tracker-extract - Tracker : A library to develop metadata extractors for 3rd party file types.
+--- a/doc/manual/upgrade.xml
++++ b/doc/manual/upgrade.xml
+@@ -120,7 +120,7 @@
+ 
+       <para>As these days the only applications making use of Resource Forks
+       are Adobe Photoshop (image preview) and Postscript Type 1 fonts, even on
+-      eg Linux you’ll get rid of 99% of any extra Netatalk AppleDouble files
++      e.g. Linux you’ll get rid of 99% of any extra Netatalk AppleDouble files
+       (and folders).</para>
+     </sect2>
+ 
+--- a/etc/afpd/auth.c
++++ b/etc/afpd/auth.c
+@@ -334,7 +334,7 @@
+ 
+     /*
+      * According to AFP 3.3 spec we should not return anything,
+-     * but eg 10.5.8 server still returns the numbers of hours
++     * but e.g. 10.5.8 server still returns the numbers of hours
+      * the server is keeping the sessino (ie max sleeptime).
+      */
+     data = obj->options.sleep / 120; /* hours */
+--- a/etc/afpd/desktop.c
++++ b/etc/afpd/desktop.c
+@@ -3,7 +3,7 @@
+  *
+  * bug:
+  * afp_XXXcomment are (the only) functions able to open
+- * a ressource fork when there's no data fork, eg after
++ * a ressource fork when there's no data fork, e.g. after
+  * it was removed with samba.
+  */
+ 
+--- a/etc/afpd/filedir.c
++++ b/etc/afpd/filedir.c
+@@ -283,7 +283,7 @@
+      *   b) the oldname (renameat is available)
+      * we are in the dest folder so we need to use 
+      *   a) oldunixname for ad_open
+-     *   b) fchdir sdir_fd before eg ad_open or use *at functions where appropriate
++     *   b) fchdir sdir_fd before e.g. ad_open or use *at functions where appropriate
+      */
+ 
+     if (sdir_fd != -1) {
+--- a/include/atalk/uam.h
++++ b/include/atalk/uam.h
+@@ -74,7 +74,7 @@
+   size_t  cryptedkey_len;
+   void    *sessiontoken;        /* session token sent to the client on FPGetSessionToken*/
+   size_t  sessiontoken_len;
+-  void    *clientid;          /* whole buffer cotaining eg idlen, id and boottime */
++  void    *clientid;          /* whole buffer cotaining e.g. idlen, id and boottime */
+   size_t  clientid_len;
+ };
+ 
+--- a/include/atalk/util.h
++++ b/include/atalk/util.h
+@@ -5,7 +5,7 @@
+  * Utility functions for these areas: \n
+  * * sockets \n
+  * * locking \n
+- * * misc UNIX function wrappers, eg for getcwd
++ * * misc UNIX function wrappers, e.g. for getcwd
+  */
+ 
+ #ifndef _ATALK_UTIL_H
+--- a/libatalk/acl/unix.c
++++ b/libatalk/acl/unix.c
+@@ -206,7 +206,7 @@
+  * Change mode of file preserving existing explicit ACEs
+  *
+  * nfsv4_chmod
+- * (1) reads objects ACL (acl1), may return 0 or -1 NFSv4 ACEs on eg UFS fs
++ * (1) reads objects ACL (acl1), may return 0 or -1 NFSv4 ACEs on e.g. UFS fs
+  * (2) removes all trivial ACEs from the ACL by calling strip_trivial_aces(), possibly
+  *     leaving 0 ACEs in the ACL if there were only trivial ACEs as mapped from the mode
+  * (3) calls chmod() with mode, we're done if step (1) returned 0 for noaces
+@@ -281,7 +281,7 @@
+ #ifdef HAVE_POSIX_ACLS
+ 
+ /* This is a workaround for chmod() on filestystems supporting Posix 1003.1e draft 17
+- * compliant ACLs. For objects with extented ACLs, eg objects with an ACL_MASK entry,
++ * compliant ACLs. For objects with extented ACLs, e.g. objects with an ACL_MASK entry,
+  * chmod() manipulates ACL_MASK instead of ACL_GROUP_OBJ. As OS X isn't aware of
+  * this behavior calling FPSetFileDirParms may lead to unpredictable results. For
+  * more information see section 23.1.2 of Posix 1003.1e draft 17.
+--- a/libatalk/adouble/ad_flush.c
++++ b/libatalk/adouble/ad_flush.c
+@@ -331,14 +331,14 @@
+ EC_CLEANUP:
+     if (cwd != -1) {
+         if (fchdir(cwd) != 0) {
+-            AFP_PANIC("ad_flush: cant fchdir");
++            AFP_PANIC("ad_flush: can't fchdir");
+         }
+         close(cwd);
+     }
+     EC_EXIT;
+ }
+ 
+-/* Flush resofork adouble file if any (currently adouble:ea and #ifndef HAVE_EAFD eg Linux) */
++/* Flush resofork adouble file if any (currently adouble:ea and #ifndef HAVE_EAFD e.g. Linux) */
+ static int ad_flush_rf(struct adouble *ad)
+ {
+     ssize_t len;
+--- a/libatalk/adouble/ad_write.c
++++ b/libatalk/adouble/ad_write.c
+@@ -166,7 +166,7 @@
+      * fork may reference the adouble handle with an open fd for the
+      * file, which means we would only delete the directory entry, not
+      * the file. Subsequently all code that works with fork handles
+-     * finds the fork open, so eg flushing a fork (ad_flush()) will
++     * finds the fork open, so e.g. flushing a fork (ad_flush()) will
+      * recreate ._ files.  The correct place to delete 0 byte sized
+      * resource forks is in of_closefork().
+      */
+--- a/libatalk/cnid/cdb/cnid_cdb_add.c
++++ b/libatalk/cnid/cdb/cnid_cdb_add.c
+@@ -216,7 +216,7 @@
+              * on dev:inode
+              *   - leftover should have been delete before.
+              *   - a second process already updated the db
+-             *   - it's a new file eg our file is already deleted and replaced
++             *   - it's a new file e.g. our file is already deleted and replaced
+              * on did:name leftover
+             */
+             if (cnid_cdb_update(cdb, hint, st, did, name, len)) {
+--- a/libatalk/util/cnid.c
++++ b/libatalk/util/cnid.c
+@@ -112,7 +112,7 @@
+     BSTRING_STRIP_SLASH(fpath);
+ 
+     /*
+-     * Now we have eg:
++     * Now we have e.g.:
+      *   fpath:   /Volume/netatalk/dir/bla
+      *   volpath: /Volume/netatalk/
+      * we want: "dir/bla"
+--- a/bin/ad/ad_find.c
++++ b/bin/ad/ad_find.c
+@@ -112,7 +112,7 @@
+     cnid_init();
+ 
+     if (openvol(obj, srchvol, &vol) != 0)
+-        ERROR("Cant open volume \"%s\"", srchvol);
++        ERROR("Can't open volume \"%s\"", srchvol);
+ 
+     uint16_t flags = CONV_TOLOWER;
+     char namebuf[MAXPATHLEN + 1];
+--- a/bin/ad/ad_ls.c
++++ b/bin/ad/ad_ls.c
+@@ -497,11 +497,11 @@
+ 
+     /* Its a dir: chdir to it remembering where we started */
+     if ((cwd = open(".", O_RDONLY)) == -1) {
+-        perror("Cant open .");
++        perror("Can't open .");
+         return -1;
+     }
+     if (chdir(path) != 0) {
+-        perror("Cant chdir");
++        perror("Can't chdir");
+         close(cwd);
+         return -1;
+     }
+--- a/bin/ad/ad_mv.c
++++ b/bin/ad/ad_mv.c
+@@ -284,7 +284,7 @@
+         }
+ 
+         if (stat(from, &sb) != 0) {
+-            SLOG("Cant stat %s: %s", to, strerror(errno));
++            SLOG("Can't stat %s: %s", to, strerror(errno));
+             return -1;
+         }
+ 
+@@ -336,14 +336,14 @@
+         }
+ 
+         if (stat(to, &sb) != 0) {
+-            SLOG("Cant stat %s: %s", to, strerror(errno));
++            SLOG("Can't stat %s: %s", to, strerror(errno));
+             return 1;
+         }
+ 
+         char *p = strdup(to);
+         char *name = basename(p);
+         if (cnid_update(dvolume.vol->v_cdb, cnid, &sb, newdid, name, strlen(name)) != 0) {
+-            SLOG("Cant update CNID for: %s", to);
++            SLOG("Can't update CNID for: %s", to);
+             return 1;
+         }
+         free(p);
+--- a/bin/ad/ad_util.c
++++ b/bin/ad/ad_util.c
+@@ -127,7 +127,7 @@
+     if ((vol->vol->v_cdb = cnid_open(vol->vol,
+                                      "dbd",
+                                      flags)) == NULL)
+-        ERROR("Cant initialize CNID database connection for %s", vol->vol->v_path);
++        ERROR("Can't initialize CNID database connection for %s", vol->vol->v_path);
+ 
+     cnid_getstamp(vol->vol->v_cdb,
+                   vol->db_stamp,
+--- a/etc/uams/uams_gss.c
++++ b/etc/uams/uams_gss.c
+@@ -389,7 +389,7 @@
+      * username, encoding unspecified, null terminated C string,
+      *   padded when the terminating null is an even numbered byte.
+      *   The packet is formated such that the username begins on an
+-     *   odd numbered byte. Eg if the username is 3 characters and the
++     *   odd numbered byte. E.g. if the username is 3 characters and the
+      *   terminating null makes 4, expect to pad the the result.
+      *   The encoding of this string is unknown.
+      * ticket length (uint16_t)
+--- a/libatalk/util/server_ipc.c
++++ b/libatalk/util/server_ipc.c
+@@ -220,7 +220,7 @@
+ 
+ 	case IPC_DISCOLDSESSION:
+         if (readt(fd, &ipc.DSI_requestID, 2, 0, 2) != 2) {
+-            LOG (log_error, logtype_afpd, "ipc_read(%s:child[%u]): couldnt read DSI id: %s",
++            LOG (log_error, logtype_afpd, "ipc_read(%s:child[%u]): couldn't read DSI id: %s",
+                  ipc_cmd_str[ipc.command], ipc.child_pid, strerror(errno));
+             return -1;
+         }

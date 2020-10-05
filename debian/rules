@@ -1,0 +1,65 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/autotools.mk
+include /usr/share/cdbs/1/rules/autoreconf.mk
+
+pkg = $(DEB_SOURCE_PACKAGE)
+
+DEB_CONFIGURE_EXTRA_FLAGS := \
+	--localstatedir=/var/lib		\
+	--with-shadow 				\
+	--enable-tcp-wrappers			\
+	--enable-overwrite			\
+	--with-pkgconfdir=/etc/netatalk		\
+	--with-dbus-daemon=/usr/bin/dbus-daemon \
+	--with-libgcrypt-dir			\
+	--enable-zeroconf			\
+	--with-kerberos				\
+	--enable-krbV-uam			\
+	--with-init-style=debian-systemd
+
+# Need to set this explicitly since we're building a -dbg package
+DEB_DESTDIR = $(CURDIR)/debian/netatalk
+
+# libgcrypt is GPL-compatible, but openssl supports randnum auth
+ifneq (,$(findstring openssl,$(DEB_BUILD_OPTIONS)))
+DEB_CONFIGURE_EXTRA_FLAGS += --with-ssl-dir --enable-pgp-uam --enable-krbV-uam --with-cracklib=/var/cache/cracklib/cracklib_dict
+else
+DEB_CONFIGURE_EXTRA_FLAGS += --without-ssl-dir
+endif
+
+# Install sysV initscript with debhelper to add pre- and postinst routines
+install/$(pkg)::
+	cp distrib/initscripts/rc.debian debian/netatalk.init
+clean::
+	rm -f debian/netatalk.init
+
+binary-post-install/$(pkg)::
+	dh_systemd_enable -pnetatalk
+	dh_systemd_start -pnetatalk
+
+# Remove unnecessary files
+binary-post-install/$(pkg)::
+	rm debian/netatalk/usr/bin/netatalk-config
+	rm debian/netatalk/usr/lib/libatalk.a
+	rm debian/netatalk/usr/lib/libatalk.la
+	rm debian/netatalk/usr/share/man/man1/afppasswd.1
+	rm debian/netatalk/usr/share/man/man1/netatalk-config.1
+	rm debian/netatalk/usr/share/man/man1/uniconv.1
+	rm -r debian/netatalk/usr/include
+	rm -r debian/netatalk/usr/share/aclocal
+	rm debian/netatalk/usr/lib/netatalk/*.la
+
+# Needed (always/often/seldom) at runtime
+#  * lsb-base needed by init scripts
+#  * netbase, libpam-modules, avahi-daemon, and quota needed by afpd
+#  * lsof and procps needed by script macusers
+CDBS_DEPENDS_$(pkg) = lsb-base, netbase, libpam-modules
+CDBS_RECOMMENDS_$(pkg) = lsof, procps, avahi-daemon
+CDBS_SUGGESTS_$(pkg) = quota
+ifneq (,$(findstring openssl,$(DEB_BUILD_OPTIONS)))
+CDBS_RECOMMENDS_$(pkg) +=, cracklib-runtime, libpam-cracklib
+endif
