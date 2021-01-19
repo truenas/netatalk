@@ -19,6 +19,7 @@ DEB_CONFIGURE_EXTRA_FLAGS := \
 	--enable-zeroconf			\
 	--with-kerberos				\
 	--enable-krbV-uam			\
+	--with-libevent-header=/usr/include/event2	\
 	--with-init-style=debian-systemd
 
 # Need to set this explicitly since we're building a -dbg package
